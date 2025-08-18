@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import ChatBot from "./Chatbot";
 
 interface VideoBackgroundProps {
   children: React.ReactNode;
@@ -50,8 +51,9 @@ export default function VideoBackground({ children }: VideoBackgroundProps) {
         </div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10">{children}</div>
+
+      <ChatBot />
     </div>
   );
 }

@@ -39,13 +39,12 @@ export default function LandingPage() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 lg:px-8 relative">
+    <div className="min-h-screen flex items-center justify-center px-6 lg:px-8 relative pt-16 sm:pt-20">
       {/* Structured Data for Skills and Profile */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            "@context": "https://schema.org",
             "@type": "ProfilePage",
             mainEntity: {
               "@type": "Person",
@@ -82,7 +81,7 @@ export default function LandingPage() {
             >
               {/* Main Title */}
               <motion.h1
-                className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+                className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -101,16 +100,16 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <h2 className="text-2xl lg:text-3xl font-semibold text-white">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white">
                 Frontend Engineer & AI Specialist
               </h2>
-              <div className="text-lg text-gray-300 space-y-3">
-                <p className="flex items-center">
+              <div className="text-base sm:text-lg text-gray-300 space-y-3">
+                <p className="flex items-center flex-wrap">
                   <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></span>
                   <span className="text-cyan-400 font-semibold">3 Years</span>
                   <span className="ml-2">Frontend Development Experience</span>
                 </p>
-                <p className="flex items-center">
+                <p className="flex items-center flex-wrap">
                   <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
                   <span className="text-blue-400 font-semibold">1 Year</span>
                   <span className="ml-2">AI & Agentic Systems</span>
@@ -119,7 +118,7 @@ export default function LandingPage() {
             </motion.div>
 
             <motion.p
-              className="text-lg text-gray-300 leading-relaxed"
+              className="text-base sm:text-lg text-gray-300 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
@@ -140,11 +139,11 @@ export default function LandingPage() {
               <h3 className="text-xl font-semibold text-white">
                 Core Technologies
               </h3>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {skills.map((skill, index) => (
                   <motion.span
                     key={skill}
-                    className="px-4 py-2 bg-white/10 backdrop-blur-sm border border-cyan-500/30 rounded-full text-sm font-medium text-cyan-300"
+                    className="px-3 py-1 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border border-cyan-500/30 rounded-full text-xs sm:text-sm font-medium text-cyan-300"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
@@ -162,7 +161,7 @@ export default function LandingPage() {
 
           {/* Right Side - Creative Visual */}
           <motion.div
-            className="relative h-96 lg:h-[600px]"
+            className="relative h-64 sm:h-96 lg:h-[600px]"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
@@ -200,16 +199,16 @@ export default function LandingPage() {
                 animate={{ rotate: 360 }}
                 transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
               >
-                <div className="w-64 h-64 border-2 border-cyan-500/30 rounded-full relative">
+                <div className="w-48 h-48 sm:w-64 sm:h-64 border-2 border-cyan-500/30 rounded-full relative">
                   <div className="absolute inset-4 border border-blue-500/20 rounded-full">
                     <div className="absolute inset-4 border border-purple-500/20 rounded-full">
                       <div className="w-full h-full flex items-center justify-center">
                         <motion.div
-                          className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center"
+                          className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center"
                           animate={{ scale: [1, 1.2, 1] }}
                           transition={{ duration: 2, repeat: Infinity }}
                         >
-                          <span className="text-white font-bold text-xl">
+                          <span className="text-white font-bold text-lg sm:text-xl">
                             AI
                           </span>
                         </motion.div>
@@ -221,17 +220,21 @@ export default function LandingPage() {
                   {["⚛️", "🚀", "🤖", "💻"].map((icon, index) => (
                     <motion.div
                       key={index}
-                      className="absolute w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-xl"
+                      className="absolute w-8 h-8 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-base sm:text-xl"
                       style={{
                         top: "50%",
                         left: "50%",
-                        marginTop: "-24px",
-                        marginLeft: "-24px",
+                        marginTop: window.innerWidth < 640 ? "-16px" : "-24px",
+                        marginLeft: window.innerWidth < 640 ? "-16px" : "-24px",
                       }}
                       animate={{
                         rotate: 360,
-                        x: Math.cos(index * (Math.PI / 2)) * 120,
-                        y: Math.sin(index * (Math.PI / 2)) * 120,
+                        x:
+                          Math.cos(index * (Math.PI / 2)) *
+                          (window.innerWidth < 640 ? 80 : 120),
+                        y:
+                          Math.sin(index * (Math.PI / 2)) *
+                          (window.innerWidth < 640 ? 80 : 120),
                       }}
                       transition={{
                         duration: 10 + index * 2,
@@ -248,7 +251,7 @@ export default function LandingPage() {
 
             {/* Code Snippet Overlay */}
             <motion.div
-              className="absolute bottom-0 right-0 bg-black/40 backdrop-blur-sm p-4 rounded-lg border border-cyan-500/30"
+              className="absolute bottom-0 right-0 bg-black/40 backdrop-blur-sm p-2 sm:p-4 rounded-lg border border-cyan-500/30 hidden sm:block"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 1.6 }}
@@ -274,7 +277,7 @@ export default function LandingPage() {
         </div>
 
         {/* Floating Scroll Down Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

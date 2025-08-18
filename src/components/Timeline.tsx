@@ -36,7 +36,7 @@ function TimelineItemComponent({
       ref={ref}
       className={`relative flex items-center mb-16 ${
         isLeft ? "justify-start" : "justify-end"
-      }`}
+      } ${isLeft ? "md:justify-start" : "md:justify-end"} justify-center`}
       initial={{ opacity: 0, x: isLeft ? -100 : 100 }}
       animate={
         isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isLeft ? -100 : 100 }
@@ -45,7 +45,7 @@ function TimelineItemComponent({
     >
       {/* Timeline Node */}
       <motion.div
-        className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full border-4 border-black z-10"
+        className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full border-2 md:border-4 border-black z-10"
         initial={{ scale: 0 }}
         animate={isInView ? { scale: 1 } : { scale: 0 }}
         transition={{ duration: 0.5, delay: isInView ? index * 0.2 + 0.3 : 0 }}
@@ -53,14 +53,16 @@ function TimelineItemComponent({
 
       {/* Content Card */}
       <motion.div
-        className={`w-5/12 ${isLeft ? "mr-auto pr-8" : "ml-auto pl-8"}`}
+        className={`w-11/12 md:w-5/12 ${
+          isLeft ? "md:mr-auto md:pr-8" : "md:ml-auto md:pl-8"
+        }`}
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="bg-white/5 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-6 hover:border-cyan-400/40 transition-all duration-300">
+        <div className="bg-white/5 backdrop-blur-sm border border-cyan-500/20 rounded-xl p-4 md:p-6 hover:border-cyan-400/40 transition-all duration-300">
           {/* Year Badge */}
           <motion.div
-            className="inline-block px-3 py-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-400/30 rounded-full text-cyan-300 text-sm font-semibold mb-4"
+            className="inline-block px-2 py-1 md:px-3 md:py-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-400/30 rounded-full text-cyan-300 text-xs md:text-sm font-semibold mb-3 md:mb-4"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={
               isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }
@@ -75,7 +77,7 @@ function TimelineItemComponent({
 
           {/* Type Badge */}
           <div
-            className={`inline-block ml-2 px-2 py-1 rounded-full text-xs font-medium ${
+            className={`inline-block ml-2 px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-xs font-medium ${
               item.type === "experience"
                 ? "bg-green-500/20 text-green-300 border border-green-400/30"
                 : "bg-purple-500/20 text-purple-300 border border-purple-400/30"
@@ -85,7 +87,7 @@ function TimelineItemComponent({
           </div>
 
           {/* Title and Company */}
-          <h3 className="text-xl font-bold text-white mt-3 mb-2">
+          <h3 className="text-lg md:text-xl font-bold text-white mt-3 mb-2">
             {item.title}
           </h3>
           {item.company && (
@@ -100,7 +102,7 @@ function TimelineItemComponent({
           )}
 
           {/* Description */}
-          <p className="text-gray-300 mb-4 leading-relaxed">
+          <p className="text-sm md:text-base text-gray-300 mb-3 md:mb-4 leading-relaxed">
             {item.description}
           </p>
 
@@ -108,8 +110,8 @@ function TimelineItemComponent({
           <div className="flex flex-wrap gap-2 mb-4">
             {item.technologies.map((tech, techIndex) => (
               <motion.span
-                key={tech}
-                className="px-2 py-1 bg-blue-500/10 border border-blue-400/20 rounded text-xs text-blue-300"
+                key={techIndex}
+                className="px-1.5 py-0.5 md:px-2 md:py-1 bg-blue-500/10 border border-blue-400/20 rounded text-xs text-blue-300"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={
                   isInView
@@ -129,14 +131,14 @@ function TimelineItemComponent({
           {/* Achievements */}
           {item.achievements && (
             <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-gray-300">
+              <h4 className="text-xs md:text-sm font-semibold text-gray-300">
                 Key Achievements:
               </h4>
               <ul className="space-y-1">
                 {item.achievements.map((achievement, achIndex) => (
                   <motion.li
                     key={achIndex}
-                    className="text-sm text-gray-400 flex items-start"
+                    className="text-xs md:text-sm text-gray-400 flex items-start"
                     initial={{ opacity: 0, x: -20 }}
                     animate={
                       isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
@@ -237,7 +239,7 @@ export default function Timeline() {
   ];
 
   return (
-    <div className="min-h-screen py-20 px-6 lg:px-8">
+    <div className="min-h-screen py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
       {/* Structured Data for Experience and Projects */}
       <script
         type="application/ld+json"
@@ -279,12 +281,12 @@ export default function Timeline() {
           viewport={{ once: false }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl lg:text-6xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4">
             <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               Journey
             </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
             My professional evolution through projects and experiences in the
             world of technology
           </p>
@@ -294,7 +296,7 @@ export default function Timeline() {
         {/* Timeline */}
         <div className="relative">
           {/* Center Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-cyan-500/50 to-blue-500/50 rounded-full"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 md:w-1 h-full bg-gradient-to-b from-cyan-500/50 to-blue-500/50 rounded-full"></div>
 
           {timelineData.map((item, index) => (
             <TimelineItemComponent
