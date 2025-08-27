@@ -1,12 +1,19 @@
 "use client";
 
+import emailjs from "@emailjs/browser";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { motion, useInView } from "motion/react";
-import { useRef, useState } from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
+
+  const myEmail = process.env.NEXT_PUBLIC_MY_EMAIL!;
+  const myPhone = process.env.NEXT_PUBLIC_MY_PHONE!;
+  const myEmailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+  const myEmailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+  const myEmailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,6 +26,11 @@ export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(myEmailJsPublicKey);
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -33,29 +45,44 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const result = await emailjs.send(
+        myEmailJsServiceId,
+        myEmailJsTemplateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: myEmail,
+        }
+      );
+
+      console.log("Email sent successfully:", result);
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
-
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
       // Reset status after 3 seconds
       setTimeout(() => setSubmitStatus("idle"), 3000);
-    }, 1500);
+    }
   };
 
   const contactInfo = [
     {
       icon: <Mail className="w-6 h-6" />,
       label: "Email",
-      value: "pntdai.work@gmail.com",
-      href: "mailto:pntdai.work@gmail.com",
+      value: myEmail,
+      href: `mailto:${myEmail}`,
     },
     {
       icon: <Phone className="w-6 h-6" />,
       label: "Phone",
-      value: "+84 772 741 789",
-      href: "tel:+84772741789",
+      value: myPhone,
+      href: `tel:${myPhone}`,
     },
     {
       icon: <MapPin className="w-6 h-6" />,
@@ -105,6 +132,17 @@ export default function Contact() {
                   animate={{ opacity: 1, scale: 1 }}
                 >
                   ✅ Message sent successfully! I&apos;ll get back to you soon.
+                </motion.div>
+              )}
+
+              {submitStatus === "error" && (
+                <motion.div
+                  className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-500/20 border border-red-400/30 rounded-lg text-red-300 text-sm sm:text-base"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                >
+                  ❌ Failed to send message. Please try again or email me
+                  directly.
                 </motion.div>
               )}
 

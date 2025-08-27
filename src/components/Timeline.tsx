@@ -45,7 +45,7 @@ function TimelineItemComponent({
     >
       {/* Timeline Node */}
       <motion.div
-        className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full border-2 md:border-4 border-black z-10"
+        className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full border-2 md:border-4 border-black z-10 hidden sm:block"
         initial={{ scale: 0 }}
         animate={isInView ? { scale: 1 } : { scale: 0 }}
         transition={{ duration: 0.5, delay: isInView ? index * 0.2 + 0.3 : 0 }}
@@ -296,7 +296,7 @@ export default function Timeline() {
         {/* Timeline */}
         <div className="relative">
           {/* Center Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 md:w-1 h-full bg-gradient-to-b from-cyan-500/50 to-blue-500/50 rounded-full"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 md:w-1 h-full bg-gradient-to-b from-cyan-500/50 to-blue-500/50 rounded-full hidden sm:block" />
 
           {timelineData.map((item, index) => (
             <TimelineItemComponent

@@ -1,8 +1,8 @@
-import VideoBackground from "@/components/VideoBackground";
+import Contact from "@/components/Contact";
 import Header from "@/components/Header";
 import LandingPage from "@/components/LandingPage";
 import Timeline from "@/components/Timeline";
-import Contact from "@/components/Contact";
+import VideoBackground from "@/components/VideoBackground";
 
 export default function Home() {
   return (

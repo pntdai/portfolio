@@ -38,19 +38,9 @@ export default function VideoBackground({ children }: VideoBackgroundProps) {
 
         {/* Tech grid overlay */}
         <div className="absolute inset-0 opacity-10">
-          <div
-            className="w-full h-full"
-            style={{
-              backgroundImage: `
-              linear-gradient(cyan 1px, transparent 1px),
-              linear-gradient(90deg, cyan 1px, transparent 1px)
-            `,
-              backgroundSize: "50px 50px",
-            }}
-          />
+          <div className="w-full h-full bg-[length:50px_50px] [background-image:linear-gradient(cyan_1px,transparent_1px),linear-gradient(90deg,cyan_1px,transparent_1px)]" />
         </div>
       </div>
-
       <div className="relative z-10">{children}</div>
 
       <ChatBot />

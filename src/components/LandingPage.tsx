@@ -139,21 +139,22 @@ export default function LandingPage() {
               <h3 className="text-xl font-semibold text-white">
                 Core Technologies
               </h3>
+
               <div className="flex flex-wrap gap-2 sm:gap-3">
-                {skills.map((skill, index) => (
-                  <motion.span
+                {skills.map((skill) => (
+                  <motion.div
                     key={skill}
-                    className="px-3 py-1 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border border-cyan-500/30 rounded-full text-xs sm:text-sm font-medium text-cyan-300"
+                    className="block cursor-pointer px-3 py-1  sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border border-cyan-500/30 rounded-full text-xs sm:text-sm font-medium text-cyan-300"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
+                    transition={{ duration: 0.5 }}
                     whileHover={{
                       scale: 1.05,
                       backgroundColor: "rgba(34, 211, 238, 0.1)",
                     }}
                   >
                     {skill}
-                  </motion.span>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -166,32 +167,6 @@ export default function LandingPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            {/* Floating Elements */}
-            <div className="absolute inset-0">
-              {floatingElements.map((element) => (
-                <motion.div
-                  key={element.id}
-                  className="absolute rounded-full bg-gradient-to-r from-cyan-400/20 to-blue-500/20 backdrop-blur-sm"
-                  style={{
-                    width: `${element.size}px`,
-                    height: `${element.size}px`,
-                    left: `${element.x}%`,
-                    top: `${element.y}%`,
-                  }}
-                  animate={{
-                    y: [0, -30, 0],
-                    opacity: [0.3, 0.8, 0.3],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: element.duration,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
-            </div>
-
             {/* Central Tech Visualization */}
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
@@ -216,7 +191,6 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Orbiting Tech Icons */}
                   {["⚛️", "🚀", "🤖", "💻"].map((icon, index) => (
                     <motion.div
                       key={index}
