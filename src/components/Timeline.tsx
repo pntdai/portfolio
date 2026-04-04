@@ -20,42 +20,22 @@ interface TimelineItem {
 interface TimelineItemComponentProps {
   item: TimelineItem;
   index: number;
-  isLeft: boolean;
 }
 
-function TimelineItemComponent({
-  item,
-  index,
-  isLeft,
-}: TimelineItemComponentProps) {
+function TimelineItemComponent({ item, index }: TimelineItemComponentProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
 
   return (
     <motion.div
       ref={ref}
-      className={`relative flex items-center mb-16 ${
-        isLeft ? "justify-start" : "justify-end"
-      } ${isLeft ? "md:justify-start" : "md:justify-end"} justify-center`}
-      initial={{ opacity: 0, x: isLeft ? -100 : 100 }}
-      animate={
-        isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isLeft ? -100 : 100 }
-      }
-      transition={{ duration: 0.8, delay: isInView ? index * 0.2 : 0 }}
+      className="relative w-full min-w-0"
+      initial={{ opacity: 0, y: 48 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 48 }}
+      transition={{ duration: 0.7, delay: isInView ? index * 0.12 : 0 }}
     >
-      {/* Timeline Node */}
       <motion.div
-        className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full border-2 md:border-4 border-black z-10 hidden sm:block"
-        initial={{ scale: 0 }}
-        animate={isInView ? { scale: 1 } : { scale: 0 }}
-        transition={{ duration: 0.5, delay: isInView ? index * 0.2 + 0.3 : 0 }}
-      />
-
-      {/* Content Card */}
-      <motion.div
-        className={`w-11/12 md:w-5/12 ${
-          isLeft ? "md:mr-auto md:pr-8" : "md:ml-auto md:pl-8"
-        }`}
+        className="w-full"
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
@@ -176,101 +156,73 @@ export default function Timeline() {
   const timelineData: TimelineItem[] = [
     {
       id: 1,
-      year: "2023 - Current",
-      title: "Frontend Engineer",
-      company: "Fullerton Health Vietnam",
-      companyUrl: "https://www.linkedin.com/company/fullerton-health/",
+      year: "June 2023 - Present",
+      title: "Frontend Engineering",
+      company: "Fullerton Health Group - Insurance & TPA Solutions",
+      companyUrl: "https://www.fullertonhealth.com",
       type: "experience",
       description:
-        "Developing and maintaining web applications using modern frontend technologies, focusing on user experience and performance.",
+        "Fullerton Health Group's Insurance & TPA Solutions arm builds digital insurance and third-party administration products for regional markets",
       technologies: [
         "React",
         "TypeScript",
-        "Tailwind CSS",
-        "Shadcn UI",
+        "Ant Design",
+        "Tailwind",
         "Zustand",
+        "Zod",
+        "Vite",
+        "Vitest",
+        "TanStack Router",
         "React Query",
-        "Storybook",
-        "Tanstack Router",
-        "React Query",
+        "i18next",
+        "Micro Frontend",
       ],
       achievements: [
-        "Developed and maintained web applications using modern frontend technologies, focusing on user experience and performance.",
-        "Built a scalable and maintainable Frontend architecture for a large-scale web application.",
-        "Implemented a robust testing strategy to ensure the reliability and maintainability of the codebase.",
-        "Collaborated with cross-functional teams to deliver high-quality software solutions.",
-        "Optimized frontend performance to improve user experience and reduce load times.",
-        "Built design system with storybook",
+        "Built a multi-regional insurance portal (Vietnam & Singapore) with React/TypeScript; standardized UI and cut design debt ~40%.",
+        "Design system on Ant Design + Storybook + theme tokens, with visual regression; ~90% component reuse across enterprise modules.",
+        "Separated server cache (React Query) from client state (Zustand), trimming redundant API work and keeping the UI synchronized.",
+        "TanStack Router + i18next for routing and localization; RBAC across regional markets.",
+        "Code-splitting, lazy loading, and caching improved TTI by 28–35% on low-end devices.",
+        "Zod + React Hook Form for API/forms; ~45% fewer validation bugs and cleaner backend handoffs.",
+        "Migrated Webpack → Vite; ~30% faster builds and quicker release cycles.",
+        "Vitest unit/integration tests to lock in business logic and cut production regressions.",
+        "Led a 4-person frontend squad: sprint planning, code review, releases, and cross-functional coordination.",
       ],
     },
     {
       id: 2,
-      year: "2021-2022",
-      title: "Junior Frontend Developer",
-      company: "TAPTAP",
-      companyUrl: "https://www.linkedin.com/company/taptapvn/",
+      year: "2022 - 2023",
+      title: "Fullstack developer",
+      company: "TAPTAP Digital",
+      companyUrl: "https://taptap.com.vn/",
       type: "experience",
       description:
-        "Started career in frontend development, working on various client projects and learning modern web technologies.",
-      technologies: ["HTML5", "CSS3", "JavaScript", "jQuery", "Bootstrap"],
-      achievements: [
-        "Delivered 20+ client projects",
-        "Mastered responsive design principles",
-        "Learned React and modern JS frameworks",
+        "TAPTAP Digital — Customer Loyalty & Rewards Platform. District 1, Ho Chi Minh City.",
+      technologies: [
+        "React",
+        "NestJS",
+        "TypeScript",
+        "MongoDB",
+        "Redis",
+        "Ant Design",
+        "Tailwind",
+        "Recoil",
+        "Micro Frontend",
       ],
-    },
-    {
-      id: 3,
-      year: "2025",
-      title: "AI-Powered Portfolio Platform",
-      type: "project",
-      description:
-        "Built an intelligent portfolio platform using Next.js 15, integrating OpenAI APIs for dynamic content generation and user interaction.",
-      technologies: ["Python", "OpenAI API", "Hugging Face", "Sendgrid"],
       achievements: [
-        "Designed and developed a cutting-edge interactive digital portfolio (using Next.js and Framer Motion) that seamlessly integrates an AI-powered chatbot to provide dynamic, on-demand information",
-        "Engineered the backend using Python and OpenAI API, enabling the chatbot to intelligently interpret user questions and extract relevant details directly from my linked PDF portfolio",
-        "Implemented robust PDF parsing and data retrieval mechanisms to ensure the chatbot accurately answers queries based on my portfolio's content",
-        "Integrated Pushover notifications to receive instant email alerts when users initiate contact through the chatbot, facilitating prompt follow-up",
-        "Utilized Framer Motion to create a highly engaging and fluid user experience, enhancing the visual appeal and interactivity of the portfolio itself",
+        "Engineered full-stack features for a high-traffic loyalty and rewards platform utilizing React, NestJS, and MongoDB, ensuring secure and robust synchronization of user transaction data.",
+        "Spearheaded the migration from a monolithic codebase to a Micro-frontend architecture utilizing Webpack Module Federation, decoupling independent teams and accelerating feature time-to-market.",
+        "Architected and optimized RESTful APIs for core business logic, implementing Redis caching to reduce backend response latency and handle high-concurrency traffic during peak reward campaigns.",
+        "Designed efficient MongoDB aggregation pipelines to process complex user point calculations, significantly improving data retrieval speeds for customer analytics dashboards.",
+        "Standardized frontend development by building a library of reusable TypeScript and Ant Design components, drastically reducing UI code duplication across the system.",
+        "Implemented Recoil for highly dynamic global state management, optimizing React re-renders for data-heavy dashboard views.",
       ],
-      link: "https://github.com/pntdai/portfolio",
     },
   ];
 
   return (
     <div className="min-h-screen py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
       {/* Structured Data for Experience and Projects */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: "Dai Phan Professional Experience",
-            description:
-              "Professional timeline showcasing projects and work experience",
-            itemListElement: timelineData.map((item, index) => ({
-              "@type": "ListItem",
-              position: index + 1,
-              item: {
-                "@type":
-                  item.type === "experience"
-                    ? "WorkExperience"
-                    : "CreativeWork",
-                name: item.title,
-                description: item.description,
-                dateCreated: item.year,
-                ...(item.company && {
-                  worksFor: { "@type": "Organization", name: item.company },
-                }),
-                keywords: item.technologies.join(", "),
-                ...(item.achievements && { award: item.achievements }),
-              },
-            })),
-          }),
-        }}
-      />
 
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
@@ -293,18 +245,27 @@ export default function Timeline() {
           <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full mx-auto mt-6"></div>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Center Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 md:w-1 h-full bg-gradient-to-b from-cyan-500/50 to-blue-500/50 rounded-full hidden sm:block" />
+        {/* Timeline — single column, chronological (top → bottom) */}
+        <div className="relative max-w-4xl mx-auto">
+          <div
+            className="absolute left-5 top-2 bottom-2 w-0.5 sm:w-1 -translate-x-1/2 bg-gradient-to-b from-cyan-500/50 to-blue-500/50 rounded-full"
+            aria-hidden
+          />
 
           {timelineData.map((item, index) => (
-            <TimelineItemComponent
+            <div
               key={item.id}
-              item={item}
-              index={index}
-              isLeft={index % 2 === 0}
-            />
+              className="relative pb-12 sm:pb-16 last:pb-0 pl-11 sm:pl-14"
+            >
+              <motion.div
+                className="absolute left-5 top-8 sm:top-10 z-10 w-3 h-3 sm:w-4 sm:h-4 -translate-x-1/2 rounded-full border-2 sm:border-4 border-black bg-gradient-to-r from-cyan-500 to-blue-500"
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: false, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: index * 0.08 }}
+              />
+              <TimelineItemComponent item={item} index={index} />
+            </div>
           ))}
         </div>
       </div>

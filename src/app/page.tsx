@@ -1,3 +1,4 @@
+import AchievementsEducation from "@/components/AchievementsEducation";
 import Contact from "@/components/Contact";
 import Header from "@/components/Header";
 import LandingPage from "@/components/LandingPage";
@@ -14,6 +15,12 @@ export default function Home() {
         </section>
         <section id="timeline" aria-label="Professional timeline">
           <Timeline />
+        </section>
+        <section
+          id="achievements-education"
+          aria-label="Achievements and education"
+        >
+          <AchievementsEducation />
         </section>
         <section id="contact" aria-label="Contact information">
           <Contact />

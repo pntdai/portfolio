@@ -3,6 +3,20 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
+/** First calendar day of professional work (set month 0–11, day if you want exact tenure). */
+const FRONTEND_CAREER_START = new Date(2022, 0, 1);
+
+function getYearsSinceStart(start: Date): number {
+  const elapsed = Date.now() - start.getTime();
+  const msPerYear = 1000 * 60 * 60 * 24 * 365.25;
+  return Math.max(0, elapsed / msPerYear);
+}
+
+/** e.g. 4.3 → "4+" for display */
+function formatYearsPlusLabel(start: Date): string {
+  return `${Math.floor(getYearsSinceStart(start))}+`;
+}
+
 export default function LandingPage() {
   const [mounted, setMounted] = useState(false);
 
@@ -10,60 +24,39 @@ export default function LandingPage() {
     setMounted(true);
   }, []);
 
+  const frontendYearsLabel = `${formatYearsPlusLabel(FRONTEND_CAREER_START)} years`;
+
   const skills = [
     "React",
+    "Zustand",
+    "React Query",
+    "React Hook Form",
+    "i18next",
+    "Socket.io",
+    "Storybook",
+    "Zod",
+    "Ant Design",
+    "Chart.js",
+    "Recharts",
     "Next.js",
     "TypeScript",
+    "Shadcn UI",
     "GraphQL",
     "Tailwind CSS",
-    "Shadcn UI",
-    "Python",
+    "Apollo Client",
+    "Vercel AI SDK",
     "Langchain",
-    "LlamaIndex",
-    "LangGraph",
     "RAG",
     "Prompting",
     "OpenAI API",
-    "OpenAI Agent SDK",
-    "CrewAI",
+    "MCP",
   ];
-
-  const floatingElements = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 4 + 2,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    duration: Math.random() * 20 + 10,
-  }));
 
   if (!mounted) return null;
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 lg:px-8 relative pt-16 sm:pt-20">
       {/* Structured Data for Skills and Profile */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@type": "ProfilePage",
-            mainEntity: {
-              "@type": "Person",
-              name: "Dai Phan",
-              jobTitle: "Frontend Engineer & AI Specialist",
-              description:
-                "Crafting innovative digital experiences through cutting-edge frontend technologies and AI-powered solutions. Specialized in building scalable applications that bridge the gap between human creativity and artificial intelligence.",
-              hasOccupation: {
-                "@type": "Occupation",
-                name: "Frontend Engineer",
-                occupationalCategory: "Software Development",
-                skills: skills.join(", "),
-              },
-              knowsAbout: skills,
-              yearsOfExperience: "3+ years Frontend Development, 1+ year AI/ML",
-            },
-          }),
-        }}
-      />
 
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -101,18 +94,20 @@ export default function LandingPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white">
-                Frontend Engineer & AI Specialist
+                Frontend Engineer
               </h2>
               <div className="text-base sm:text-lg text-gray-300 space-y-3">
                 <p className="flex items-center flex-wrap">
                   <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></span>
-                  <span className="text-cyan-400 font-semibold">3 Years</span>
+                  <span className="text-cyan-400 font-semibold">
+                    {frontendYearsLabel}
+                  </span>
                   <span className="ml-2">Frontend Development Experience</span>
                 </p>
                 <p className="flex items-center flex-wrap">
                   <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                  <span className="text-blue-400 font-semibold">1 Year</span>
-                  <span className="ml-2">AI & Agentic Systems</span>
+                  <span className="text-blue-400 font-semibold">6 months</span>
+                  <span className="ml-2">Self-taught AI & Agentic Systems</span>
                 </p>
               </div>
             </motion.div>
@@ -123,10 +118,12 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              Crafting innovative digital experiences through cutting-edge
-              frontend technologies and AI-powered solutions. Specialized in
-              building scalable applications that bridge the gap between human
-              creativity and artificial intelligence.
+              Frontend Engineer with {frontendYearsLabel} of experience building
+              scalable, high-performance web applications using React, Next.js,
+              and TypeScript. Skilled in micro-frontend architecture, design
+              systems, and performance optimization. Experienced in developing
+              AI-powered web applications and integrating AI solutions to
+              deliver intelligent, user-centric experiences.
             </motion.p>
 
             {/* Skills */}
@@ -233,12 +230,16 @@ export default function LandingPage() {
               <div className="text-xs font-mono text-green-400">
                 <div className="text-cyan-400">const engineer = {`{`}</div>
                 <div className="ml-2 text-white">
-                  Frontend:{" "}
-                  <span className="text-yellow-400">&quot;3+ years&quot;</span>,
+                  Frontend Engineering:{" "}
+                  <span className="text-yellow-400">
+                    &quot;{formatYearsPlusLabel(FRONTEND_CAREER_START)}{" "}
+                    years&quot;
+                  </span>
+                  ,
                 </div>
                 <div className="ml-2 text-white">
-                  AI:{" "}
-                  <span className="text-yellow-400">&quot;1+ year&quot;</span>,
+                  Self-taught AI:{" "}
+                  <span className="text-yellow-400">&quot;6 months&quot;</span>,
                 </div>
                 <div className="ml-2 text-white">
                   Passion:{" "}

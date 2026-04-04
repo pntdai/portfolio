@@ -1,8 +1,8 @@
 "use client";
 
+import { MessageSquareMore, Send, X } from "lucide-react";
 import { motion } from "motion/react";
-import { useState, useRef, useEffect } from "react";
-import { MessageSquareMore, X, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 type TMessage = {
   role: "user" | "assistant";
@@ -15,7 +15,7 @@ export default function ChatBot() {
     {
       role: "assistant",
       content:
-        "Hi there! I'm Dai's AI assistant. Ask me anything about my  experience and skills!",
+        "Hi there! I'm Dai Phan. Ask me anything about my  experience and skills!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -118,7 +118,7 @@ export default function ChatBot() {
             </div>
             <div className="ml-3">
               <h3 className="text-white font-semibold text-sm sm:text-base">
-                Dai&apos;s AI Assistant
+                DP&apos;s AI Assistant
               </h3>
               <p className="text-cyan-300 text-xs hidden sm:block">
                 Ask me anything about Dai&apos;s skills and experience

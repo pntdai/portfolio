@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dai Phan Portfolio - Frontend Engineer & AI Specialist",
+  title: "Dai Phan Portfolio - Software Engineering",
   description:
     "Experienced Frontend Engineer with 3+ years in React, Next.js, TypeScript and 1+ year in AI/ML. Specialized in building scalable web applications and AI-powered solutions.",
   keywords: [
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://daiphan.dev", // Replace with your actual domain
     siteName: "Dai Phan Portfolio",
-    title: "Dai Phan - Frontend Engineer & AI Specialist",
+    title: "Dai Phan - Software Engineering",
     description:
       "Experienced Frontend Engineer with 3+ years in React, Next.js, TypeScript and 1+ year in AI/ML. Building innovative digital experiences through cutting-edge technologies.",
     images: [
@@ -61,13 +61,13 @@ export const metadata: Metadata = {
         url: "/og-image.jpg", // You'll need to add this image
         width: 1200,
         height: 630,
-        alt: "Dai Phan - Frontend Engineer & AI Specialist Portfolio",
+        alt: "Dai Phan - Software Engineering Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dai Phan - Frontend Engineer & AI Specialist",
+    title: "Dai Phan - Software Engineering",
     description:
       "Experienced Frontend Engineer with 3+ years in React, Next.js, TypeScript and 1+ year in AI/ML.",
     images: ["/og-image.jpg"], // Same image as Open Graph
@@ -99,55 +99,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Structured Data for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Dai Phan",
-              jobTitle: "Frontend Engineer & AI Specialist",
-              description:
-                "Experienced Frontend Engineer with 3+ years in React, Next.js, TypeScript and 1+ year in AI/ML",
-              url: "https://daiphan.dev",
-              sameAs: [
-                "https://linkedin.com/in/daiphan",
-                "https://github.com/daiphan",
-                "https://twitter.com/daiphan",
-              ],
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "San Francisco",
-                addressRegion: "CA",
-                addressCountry: "US",
-              },
-              email: "dai.phan@example.com",
-              telephone: "+1-555-123-4567",
-              knowsAbout: [
-                "React",
-                "Next.js",
-                "TypeScript",
-                "JavaScript",
-                "Node.js",
-                "Python",
-                "AI/ML",
-                "TensorFlow",
-                "OpenAI API",
-                "Frontend Development",
-                "Web Development",
-              ],
-              alumniOf: {
-                "@type": "Organization",
-                name: "Web Development",
-              },
-              worksFor: {
-                "@type": "Organization",
-                name: "Freelance",
-              },
-            }),
-          }}
-        />
         {/* Additional meta tags for better SEO */}
         <meta name="theme-color" content="#0891b2" />
         <meta name="color-scheme" content="dark light" />

@@ -12,7 +12,7 @@ export default function VideoBackground({ children }: VideoBackgroundProps) {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 0.8; // Slow down slightly for atmosphere
+      videoRef.current.playbackRate = 0.8;
     }
   }, []);
 
