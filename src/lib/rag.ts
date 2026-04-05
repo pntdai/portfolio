@@ -1,7 +1,6 @@
 import { embed, embedMany, cosineSimilarity } from "ai";
 import { google } from "@ai-sdk/google";
-import fs from "fs/promises";
-import path from "path";
+import cvTexts from "@/data/cv-texts.json";
 
 interface ChunkEntry {
   text: string;
@@ -30,38 +29,16 @@ function splitText(
   return result;
 }
 
-async function loadPdfs(): Promise<{ text: string; fileName: string }[]> {
-  const cvDir = path.join(process.cwd(), "public", "cv");
-  let files: string[];
-  try {
-    files = await fs.readdir(cvDir);
-  } catch {
-    console.warn("[RAG] public/cv/ directory not found, no documents loaded.");
+function loadDocuments(): { text: string; fileName: string }[] {
+  if (cvTexts.length === 0) {
+    console.warn("[RAG] No pre-extracted documents found. Run: npm run extract-pdf");
     return [];
   }
-
-  const pdfFiles = files.filter((f) => f.toLowerCase().endsWith(".pdf"));
-  if (pdfFiles.length === 0) {
-    console.warn("[RAG] No PDF files found in public/cv/");
-    return [];
-  }
-
-  const results: { text: string; fileName: string }[] = [];
-
-  for (const fileName of pdfFiles) {
-    const filePath = path.join(cvDir, fileName);
-    const data = await fs.readFile(filePath);
-    const { PDFParse } = await import("pdf-parse");
-    const parser = new PDFParse({ data });
-    const parsed = await parser.getText();
-    results.push({ text: parsed.text, fileName });
-  }
-
-  return results;
+  return cvTexts as { text: string; fileName: string }[];
 }
 
 async function initialize(): Promise<void> {
-  const docs = await loadPdfs();
+  const docs = loadDocuments();
   if (docs.length === 0) {
     console.warn("[RAG] No documents to embed.");
     return;
