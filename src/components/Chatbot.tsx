@@ -1,82 +1,43 @@
 "use client";
 
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport, type UIMessage } from "ai";
 import { MessageSquareMore, Send, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
-type TMessage = {
-  role: "user" | "assistant";
-  content: string;
-};
-
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<TMessage[]>([
-    {
-      role: "assistant",
-      content:
-        "Hi there! I'm Dai Phan. Ask me anything about my  experience and skills!",
-    },
-  ]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [input, setInput] = useState("");
 
-  // Scroll to bottom of messages
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    messages: [
+      {
+        id: "greeting",
+        role: "assistant",
+        parts: [
+          {
+            type: "text",
+            text: "Hi there! I'm Dai Phan. Ask me anything about my experience and skills!",
+          },
+        ],
+      },
+    ] as UIMessage[],
+  });
+
+  const isLoading = status === "submitted" || status === "streaming";
+
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    // Add user message
-    const userMessage = { role: "user" as const, content: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setIsLoading(true);
-
-    try {
-      // Format history for the API
-      const history = messages.map((msg) => ({
-        role: msg.role,
-        content: msg.content,
-      }));
-
-      // Call your API
-      const response = await fetch("http://localhost:8000/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: userMessage.content,
-          history: history,
-        }),
-      });
-
-      const data = await response.json();
-
-      // Add assistant response
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: data.response },
-      ]);
-    } catch (error) {
-      console.error("Error fetching response:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content:
-            "Sorry, I'm having trouble connecting right now. Please try again later.",
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const getMessageText = (message: (typeof messages)[number]) =>
+    message.parts
+      ?.filter((p): p is { type: "text"; text: string } => p.type === "text")
+      .map((p) => p.text)
+      .join("") || "";
 
   return (
     <>
@@ -129,9 +90,9 @@ export default function ChatBot() {
 
         {/* Chat Messages */}
         <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
-          {messages.map((message, index) => (
+          {messages.map((message) => (
             <div
-              key={index}
+              key={message.id}
               className={`flex ${
                 message.role === "user" ? "justify-end" : "justify-start"
               }`}
@@ -143,11 +104,11 @@ export default function ChatBot() {
                     : "bg-white/10 backdrop-blur-sm border border-cyan-500/20 text-white"
                 }`}
               >
-                {message.content}
+                {getMessageText(message)}
               </div>
             </div>
           ))}
-          {isLoading && (
+          {isLoading && !getMessageText(messages[messages.length - 1]) && (
             <div className="flex justify-start">
               <div className="max-w-[80%] rounded-xl sm:rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm border border-cyan-500/20 text-white">
                 <div className="flex space-x-2">
@@ -172,7 +133,13 @@ export default function ChatBot() {
 
         {/* Chat Input */}
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (input.trim() && !isLoading) {
+              sendMessage({ text: input });
+              setInput("");
+            }
+          }}
           className="border-t border-cyan-500/30 p-3 sm:p-4"
         >
           <div className="flex space-x-2">

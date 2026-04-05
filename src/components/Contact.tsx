@@ -1,75 +1,15 @@
 "use client";
 
-import emailjs from "@emailjs/browser";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { motion, useInView } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
 
-  const myEmail = process.env.NEXT_PUBLIC_MY_EMAIL!;
-  const myPhone = process.env.NEXT_PUBLIC_MY_PHONE!;
-  const myEmailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-  const myEmailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
-  const myEmailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
-
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init(myEmailJsPublicKey);
-  }, []);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const result = await emailjs.send(
-        myEmailJsServiceId,
-        myEmailJsTemplateId,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          to_email: myEmail,
-        },
-      );
-
-      console.log("Email sent successfully:", result);
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (error) {
-      console.error("EmailJS Error:", error);
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-      // Reset status after 3 seconds
-      setTimeout(() => setSubmitStatus("idle"), 3000);
-    }
-  };
+  const myEmail = "daiphan.work@gmail.com";
+  const myPhone = "+84 772741789";
 
   const contactInfo = [
     {
